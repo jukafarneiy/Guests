@@ -7,12 +7,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import curso.kotlin.convidados.databinding.FragmentSlideshowBinding
+import curso.kotlin.convidados.databinding.FragmentAbsentBinding
 import curso.kotlin.convidados.viewmodel.AbsentGuestsViewModel
 
 class AbsentGuestsFragment : Fragment() {
 
-    private var _binding: FragmentSlideshowBinding? = null
+    private var _binding: FragmentAbsentBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -24,9 +24,9 @@ class AbsentGuestsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val slideshowViewModel =
-            ViewModelProvider(this).get(AbsentGuestsViewModel::class.java)
+            ViewModelProvider(this)[AbsentGuestsViewModel::class.java]
 
-        _binding = FragmentSlideshowBinding.inflate(inflater, container, false)
+        _binding = FragmentAbsentBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         val textView: TextView = binding.textSlideshow

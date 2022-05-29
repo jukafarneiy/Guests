@@ -26,14 +26,6 @@ class GuestFormularyActivity : AppCompatActivity() {
 
     }
 
-    private fun observe() {
-        mViewModel.saveGuest.observe(this) {
-            if (it) {
-                Toast.makeText(this, "Salvo!", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
     private fun setListeners() {
         binding.bttnSave.setOnClickListener {
 
@@ -42,6 +34,17 @@ class GuestFormularyActivity : AppCompatActivity() {
 
             mViewModel.save(name, presence)
 
+        }
+    }
+
+    private fun observe() {
+        mViewModel.saveGuest.observe(this) {
+            if (it) {
+                Toast.makeText(this, "Convidado salvo.", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Ocorreu um erro.", Toast.LENGTH_SHORT).show()
+            }
+            finish()
         }
     }
 }

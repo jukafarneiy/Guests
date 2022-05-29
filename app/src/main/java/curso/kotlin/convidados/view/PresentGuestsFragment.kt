@@ -7,12 +7,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import curso.kotlin.convidados.databinding.FragmentGalleryBinding
+import curso.kotlin.convidados.databinding.FragmentPresentBinding
 import curso.kotlin.convidados.viewmodel.PresentGuestsViewModel
 
 class PresentGuestsFragment : Fragment() {
 
-    private var _binding: FragmentGalleryBinding? = null
+    private var _binding: FragmentPresentBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -24,9 +24,9 @@ class PresentGuestsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val galleryViewModel =
-            ViewModelProvider(this).get(PresentGuestsViewModel::class.java)
+            ViewModelProvider(this)[PresentGuestsViewModel::class.java]
 
-        _binding = FragmentGalleryBinding.inflate(inflater, container, false)
+        _binding = FragmentPresentBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         val textView: TextView = binding.textGallery
