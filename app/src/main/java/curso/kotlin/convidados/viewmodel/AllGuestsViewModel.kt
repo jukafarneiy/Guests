@@ -14,9 +14,8 @@ class AllGuestsViewModel(application: Application) : AndroidViewModel(applicatio
     private val mGuestList = MutableLiveData<List<GuestModel>>()
     val guestList: LiveData<List<GuestModel>> = mGuestList
 
-    //dúvida: por q está pedindo um parâmetro se eu estou instanciando toda a função que
-    //está dentro da classe GuestRepository?
-    fun load() {
+    fun loadAll() {
         mGuestList.value = mGuestRepository.getAllGuests()
     }
+
 }

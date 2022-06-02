@@ -85,7 +85,7 @@ class GuestRepository private constructor(context: Context) {
 
     }
 
-    fun getAllGuests(guest: GuestModel): List<GuestModel> {
+    fun getAllGuests(): List<GuestModel> {
 
         val list: MutableList<GuestModel> = ArrayList()
         return try {
@@ -127,7 +127,7 @@ class GuestRepository private constructor(context: Context) {
 
     }
 
-    fun getPresentGuests(guest: GuestModel): List<GuestModel> {
+    fun getPresentGuests(): List<GuestModel> {
 
         val list: MutableList<GuestModel> = ArrayList()
         return try {
@@ -160,7 +160,7 @@ class GuestRepository private constructor(context: Context) {
         }
     }
 
-    fun getAbsentGuests(guest: GuestModel): List<GuestModel> {
+    fun getAbsentGuests(): List<GuestModel> {
 
         val list: MutableList<GuestModel> = ArrayList()
         return try {

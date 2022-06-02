@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import curso.kotlin.convidados.databinding.ActivityGuestFormularyBinding
+import curso.kotlin.convidados.service.constants.GuestConstants
 import curso.kotlin.convidados.viewmodel.GuestFormularyViewModel
 
 class GuestFormularyActivity : AppCompatActivity() {
@@ -23,6 +24,9 @@ class GuestFormularyActivity : AppCompatActivity() {
 
         setListeners()
         observe()
+        loadGuestData()
+
+        binding.radioPresent.isChecked = true
 
     }
 
@@ -45,6 +49,23 @@ class GuestFormularyActivity : AppCompatActivity() {
                 Toast.makeText(this, "Ocorreu um erro.", Toast.LENGTH_SHORT).show()
             }
             finish()
+        }
+
+        mViewModel.guest.observe(this) {
+            binding.editGuestName.setText(it.name)
+            if (it.presence) {
+                binding.radioPresent.isChecked = true
+            } else {
+                binding.radioAbsent.isChecked = true
+            }
+        }
+    }
+
+    private fun loadGuestData() {
+        val bundle = intent.extras
+        if (bundle != null) {
+            val id = bundle.getInt(GuestConstants.GUESTID)
+            mViewModel.load(id)
         }
     }
 }

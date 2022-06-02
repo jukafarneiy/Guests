@@ -28,11 +28,6 @@ class AbsentGuestsFragment : Fragment() {
 
         _binding = FragmentAbsentBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
-        val textView: TextView = binding.textSlideshow
-        slideshowViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
         return root
     }
 

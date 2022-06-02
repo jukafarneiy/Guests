@@ -1,19 +1,24 @@
 package curso.kotlin.convidados.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import curso.kotlin.convidados.databinding.FragmentAllBinding
+import curso.kotlin.convidados.service.constants.GuestConstants
 import curso.kotlin.convidados.view.adapter.GuestAdapter
+import curso.kotlin.convidados.view.listener.GuestListener
 import curso.kotlin.convidados.viewmodel.AllGuestsViewModel
 
 class AllGuestsFragment : Fragment() {
     private lateinit var allGuestsViewModel: AllGuestsViewModel
+
+    private lateinit var mListener: GuestListener
+
     private val mAdapter: GuestAdapter = GuestAdapter()
 
     private var _binding: FragmentAllBinding? = null
@@ -22,7 +27,11 @@ class AllGuestsFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
-    override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
 
         allGuestsViewModel =
             ViewModelProvider(this)[AllGuestsViewModel::class.java]
@@ -41,17 +50,33 @@ class AllGuestsFragment : Fragment() {
         //3 - Definir um adapter
         recycler.adapter = mAdapter
 
-        observer()
+        mListener = object : GuestListener {
+            override fun onClick(id: Int) {
+                val intent = Intent(context, GuestFormularyActivity::class.java)
 
-        allGuestsViewModel.load()
+                val bundle = Bundle()
+                bundle.putInt(GuestConstants.GUESTID, id)
+
+                intent.putExtras(bundle)
+                startActivity(intent)
+            }
+        }
+
+        mAdapter.attachListener(mListener)
+        observerAllGuests()
 
         return root
     }
 
-    private fun observer() {
-        allGuestsViewModel.guestList.observe(viewLifecycleOwner, Observer {
+    override fun onResume() {
+        super.onResume()
+        allGuestsViewModel.loadAll()
+    }
+
+    private fun observerAllGuests() {
+        allGuestsViewModel.guestList.observe(viewLifecycleOwner) {
             mAdapter.updateGuests(it)
-        })
+        }
     }
 
     override fun onDestroyView() {
