@@ -193,7 +193,6 @@ class GuestRepository private constructor(context: Context) {
         }
     }
 
-    //função para atualizar o convidado - se está presente ou ausente
     fun update(guest: GuestModel): Boolean {
         return try {
             val db = mGuestDataBaseHelper.writableDatabase
@@ -206,7 +205,7 @@ class GuestRepository private constructor(context: Context) {
             val selection = DataBaseConstants.GUEST.COLUMNS.ID + " = ?"
             val args = arrayOf(guest.id.toString())
 
-            db.update(DataBaseConstants.GUEST.COLUMNS.ID, contentValues, selection, args)
+            db.update(DataBaseConstants.GUEST.TABLE_NAME, contentValues, selection, args)
             true
 
         } catch (e: Exception) {
@@ -222,7 +221,7 @@ class GuestRepository private constructor(context: Context) {
             val selection = DataBaseConstants.GUEST.COLUMNS.ID + " = ?"
             val args = arrayOf(id.toString())
 
-            db.delete(DataBaseConstants.GUEST.COLUMNS.ID, selection, args)
+            db.delete(DataBaseConstants.GUEST.TABLE_NAME, selection, args)
             true
 
         } catch (e: Exception) {

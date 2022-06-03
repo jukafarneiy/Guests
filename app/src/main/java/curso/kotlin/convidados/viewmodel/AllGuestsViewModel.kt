@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import curso.kotlin.convidados.service.constants.GuestConstants
 import curso.kotlin.convidados.service.model.GuestModel
 import curso.kotlin.convidados.service.repository.GuestRepository
 
@@ -14,8 +15,22 @@ class AllGuestsViewModel(application: Application) : AndroidViewModel(applicatio
     private val mGuestList = MutableLiveData<List<GuestModel>>()
     val guestList: LiveData<List<GuestModel>> = mGuestList
 
-    fun loadAll() {
-        mGuestList.value = mGuestRepository.getAllGuests()
+    fun loadAll(filter: Int) {
+        when (filter) {
+            GuestConstants.FILTERS.EMPTY -> {
+                mGuestList.value = mGuestRepository.getAllGuests()
+            }
+            GuestConstants.FILTERS.PRESENTS -> {
+                mGuestList.value = mGuestRepository.getPresentGuests()
+            }
+            else -> {
+                mGuestList.value = mGuestRepository.getAbsentGuests()
+            }
+        }
+    }
+
+    fun delete(id: Int) {
+        mGuestRepository.delete(id)
     }
 
 }

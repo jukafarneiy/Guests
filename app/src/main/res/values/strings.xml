@@ -15,4 +15,12 @@
     <string name="rb_present">Presente</string>
     <string name="rb_absent">Ausente</string>
     <string name="button_save">SALVAR</string>
+    <string name="not_confirmed">Não confirmado</string>
+    <string name="confirmed">Confirmação</string>
+    <string name="cancel">Cancelar</string>
+    <string name="remove_guest">Remoção de convidado</string>
+    <string name="ask_remove">Deseja remover convidado da lista?</string>
+    <string name="remove">Remover</string>
+    <string name="success_revomed">Convidado removido com sucesso.</string>
+    <string name="total">Total</string>
 </resources>

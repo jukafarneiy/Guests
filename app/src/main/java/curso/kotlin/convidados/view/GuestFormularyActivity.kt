@@ -12,6 +12,7 @@ class GuestFormularyActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityGuestFormularyBinding
     private lateinit var mViewModel: GuestFormularyViewModel
+    private var mGuestId: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,15 +30,13 @@ class GuestFormularyActivity : AppCompatActivity() {
         binding.radioPresent.isChecked = true
 
     }
-
+    //dúvida
     private fun setListeners() {
         binding.bttnSave.setOnClickListener {
-
             val name = binding.editGuestName.text.toString()
             val presence = binding.radioPresent.isChecked
 
-            mViewModel.save(name, presence)
-
+            mViewModel.save(mGuestId, name, presence)
         }
     }
 
@@ -64,8 +63,8 @@ class GuestFormularyActivity : AppCompatActivity() {
     private fun loadGuestData() {
         val bundle = intent.extras
         if (bundle != null) {
-            val id = bundle.getInt(GuestConstants.GUESTID)
-            mViewModel.load(id)
+            mGuestId = bundle.getInt(GuestConstants.GUESTID)
+            mViewModel.load(mGuestId)
         }
     }
 }

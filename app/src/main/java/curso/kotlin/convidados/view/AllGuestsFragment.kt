@@ -15,10 +15,9 @@ import curso.kotlin.convidados.view.listener.GuestListener
 import curso.kotlin.convidados.viewmodel.AllGuestsViewModel
 
 class AllGuestsFragment : Fragment() {
-    private lateinit var allGuestsViewModel: AllGuestsViewModel
 
+    private lateinit var mViewModel: AllGuestsViewModel
     private lateinit var mListener: GuestListener
-
     private val mAdapter: GuestAdapter = GuestAdapter()
 
     private var _binding: FragmentAllBinding? = null
@@ -33,7 +32,7 @@ class AllGuestsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        allGuestsViewModel =
+        mViewModel =
             ViewModelProvider(this)[AllGuestsViewModel::class.java]
 
         _binding = FragmentAllBinding.inflate(inflater, container, false)
@@ -60,6 +59,11 @@ class AllGuestsFragment : Fragment() {
                 intent.putExtras(bundle)
                 startActivity(intent)
             }
+
+            override fun onDelete(id: Int) {
+                mViewModel.delete(id)
+                mViewModel.loadAll(GuestConstants.FILTERS.EMPTY)
+            }
         }
 
         mAdapter.attachListener(mListener)
@@ -70,11 +74,11 @@ class AllGuestsFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        allGuestsViewModel.loadAll()
+        mViewModel.loadAll(GuestConstants.FILTERS.EMPTY)
     }
 
     private fun observerAllGuests() {
-        allGuestsViewModel.guestList.observe(viewLifecycleOwner) {
+        mViewModel.guestList.observe(viewLifecycleOwner) {
             mAdapter.updateGuests(it)
         }
     }
